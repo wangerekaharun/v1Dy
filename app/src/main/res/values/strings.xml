@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Study</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_read">Study</string>
+    <string name="title_activity_add_content_chooser">Add Content</string>
+    <string name="title_activity_add_course">Add Course</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="bottom_sheet_peek">Hello</string>
+    <string name="bottom_sheet_content">Welcome To Study App.</string>
+</resources>
