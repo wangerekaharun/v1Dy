@@ -4,6 +4,17 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <activity
+        android:name=".News.ReadArticle"
+        android:label="@string/title_activity_read_article"
+        android:parentActivityName=".MainActivity"
+        android:theme="@style/AppTheme.NoActionBar" />
+    <activity
+        android:name=".News.Categories"
+        android:label="@string/title_activity_categories"
+        android:parentActivityName=".MainActivity"
+        android:theme="@style/AppTheme.NoActionBar" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -38,6 +49,18 @@
             android:name=".Main.login.Register"
             android:label="Sign Up"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Main.News_Api_news.News"
+            android:label="@string/title_activity_news"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Main.News_Api_news.utils.Categories"
+            android:label="@string/title_activity_categories"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Main.News_Api_news.utils.ReadArticle"
+            android:label="@string/title_activity_read_article"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

@@ -6,10 +6,4 @@
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never" />
-    <item
-        android:id="@+id/action_toggle"
-        android:icon="@drawable/ic_grid_on_white_24dp"
-        android:orderInCategory="100"
-        android:title="Show as grid"
-        app:showAsAction="always" />
 </menu>

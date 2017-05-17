@@ -1,12 +1,11 @@
 package com.erickogi14gmail.study20.Main.Adapters;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.erickogi14gmail.study20.Main.DB.DBOperations;
@@ -46,13 +45,12 @@ public class AddRecyclerViewAdapter extends RecyclerView.Adapter<AddRecyclerView
         holder.textView_list_item_noOfChapters.setText("Units :" +String.valueOf(model.getNO_OF_CHAPTERS()));
 
 
-//        DBOperations dbOperations =new DBOperations(context);
-//        if(dbOperations.getCourseById(model.getCOURSE_ID())){
-//            holder.state.setCompoundDrawables(ContextCompat.getDrawable(context, R.drawable.ic_check_circle_black_24dp),null,null,null);
-//        }
-//        else {
-//            holder.state.setCompoundDrawables(ContextCompat.getDrawable(context, R.drawable.ic_archive_black_24dp),null,null,null);
-//        }
+        DBOperations dbOperations = new DBOperations(context);
+        if (dbOperations.getCourseById(model.getCOURSE_ID())) {
+            holder.state.setImageResource(R.drawable.ic_check_circle_black_24dp);
+        } else {
+            holder.state.setImageResource(R.drawable.ic_get_app_black_24dp);
+        }
 
 
     }
@@ -75,10 +73,10 @@ public class AddRecyclerViewAdapter extends RecyclerView.Adapter<AddRecyclerView
         TextView textView_list_item_name,
                 textView_list_item_code,
                 textView_list_item_noOfChapters;
-        Button state;
+        ImageView state;
         public MyViewHolder(View itemView) {
             super(itemView);
-            state=(Button) itemView.findViewById(R.id.btn_status);
+            state = (ImageView) itemView.findViewById(R.id.btn_status);
             textView_list_item_name = (TextView) itemView.findViewById(R.id.list_item_name);
             textView_list_item_code = (TextView) itemView.findViewById(R.id.list_item_code);
             textView_list_item_noOfChapters = (TextView) itemView.findViewById(R.id.list_item_no_of_chapters);
