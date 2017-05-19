@@ -1,4 +1,4 @@
-package com.erickogi14gmail.study20.Main.News_Api_news;
+package com.erickogi14gmail.study20.Main.News_Api_news.utils;
 
 import android.net.Uri;
 import android.webkit.WebView;

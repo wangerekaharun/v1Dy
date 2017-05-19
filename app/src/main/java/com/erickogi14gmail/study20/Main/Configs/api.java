@@ -8,12 +8,15 @@ public class api {
 
     // public final static String API_KEY = "a063b2f6f85b4df6b9bce476d25f3e60";
     public final static String COURSES_END_POINT = "http://erickogi.co.ke/study/api/v1/?action=get_courses";
-
+    public final static String ASSIGNMENTS_END_POINT = "http://erickogi.co.ke/study/api/v1/?action=get_assignments";
+    public final static String ASSIGNMENT_END_POINT = "http://erickogi.co.ke/study/api/v1/?action=get_assignments&course_code=";
 
 
     public final static String CONTENT_END_POINT = "http://erickogi.co.ke/study/api/v1/?action=get_content&course_code=";
 //INTENTS KEYS
     public final static String COURSE_CODE = "course_code";
+    public final static String ASSIGNMENT_ID = "assignment_id";
+    public final static String POST_URL = "post";
 
 
 //    public final static int ALL_TECH_SOURCES_PARSING_CODE = 200;

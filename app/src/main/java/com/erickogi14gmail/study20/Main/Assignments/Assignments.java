@@ -1,6 +1,8 @@
-package com.erickogi14gmail.study20.Main.News_Api_news;
+package com.erickogi14gmail.study20.Main.Assignments;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -14,27 +16,35 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.erickogi14gmail.study20.Main.Configs.api;
+import com.erickogi14gmail.study20.Main.Read.ReadActivity;
 import com.erickogi14gmail.study20.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class News extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    public static String category = "";
-    static boolean isListView;
+public class Assignments extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private Menu menu;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_news);
+        setContentView(R.layout.activity_assignments);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
 
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -45,6 +55,7 @@ public class News extends AppCompatActivity implements NavigationView.OnNavigati
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
 
@@ -52,34 +63,8 @@ public class News extends AppCompatActivity implements NavigationView.OnNavigati
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         tabLayout.setupWithViewPager(viewPager);
         setupTabIcons();
-        isListView = true;
     }
 
-    private void toggle() {
-        localNews fragment_local_news = new localNews();
-        internationalNews fragment_international_news = new internationalNews();
-        MenuItem item = menu.findItem(R.id.action_toggle);
-        if (isListView) {
-
-
-            item.setIcon(R.drawable.ic_list_white_24dp);
-            item.setTitle("Show as list");
-            isListView = false;
-
-
-            fragment_local_news.setLayout(isListView);
-            fragment_international_news.setLayout(isListView);
-        } else {
-
-
-            item.setIcon(R.drawable.ic_grid_on_white_24dp);
-            item.setTitle("Show as grid");
-            isListView = true;
-
-            fragment_local_news.setLayout(isListView);
-            fragment_international_news.setLayout(isListView);
-        }
-    }
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -93,8 +78,7 @@ public class News extends AppCompatActivity implements NavigationView.OnNavigati
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.news, menu);
-        this.menu = menu;
+        getMenuInflater().inflate(R.menu.assignments, menu);
         return true;
     }
 
@@ -106,64 +90,26 @@ public class News extends AppCompatActivity implements NavigationView.OnNavigati
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_toggle) {
-            toggle();
+        if (id == R.id.action_settings) {
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    void start() {
-        localNews fragment_local_news = new localNews();
-        internationalNews fragment_international_news = new internationalNews();
-        fragment_local_news.start();
-        fragment_international_news.start();
-    }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-
-
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        if (id == R.id.nav_camera) {
+            Intent intent = new Intent(Assignments.this, ReadActivity.class);
+            intent.putExtra(api.POST_URL, "http://erickogi.co.ke/study/api/assignmentsPost.php");
+            intent.putExtra(api.ASSIGNMENT_ID, "null");
+            intent.putExtra(api.COURSE_CODE, "null");
+            startActivity(intent);
 
-        if (id == R.id.nav_all) {
-            category = "";
-            start();
-
-        } else if (id == R.id.nav_tech) {
-            category = api.KEY_CATEGORY_TECH;
-            start();
-
-
-        } else if (id == R.id.nav_business) {
-            category = api.KEY_CATEGORY_BUSINESS;
-            start();
-
-
-        } else if (id == R.id.nav_entertainment) {
-            category = api.KEY_CATEGORY_ENTERTAINMENT;
-            start();
-
-        } else if (id == R.id.nav_politics) {
-            category = api.KEY_CATEGORY_POLITICS;
-            start();
-
-        } else if (id == R.id.nav_music) {
-            category = api.KEY_CATEGORY_MUSIC;
-            start();
-
-        } else if (id == R.id.nav_science) {
-            category = api.KEY_CATEGORY_SCIENCE;
-            start();
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_sports) {
-            category = api.KEY_CATEGORY_SPORTS;
-            start();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -173,9 +119,8 @@ public class News extends AppCompatActivity implements NavigationView.OnNavigati
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-
-        adapter.addFragment(new internationalNews(), "in");
-        adapter.addFragment(new localNews(), "lo");
+        adapter.addFragment(new fragment_saved_assignments(), "lo");
+        adapter.addFragment(new fragment_download_assignment(), "in");
 
         viewPager.setOffscreenPageLimit(1);
         viewPager.setAdapter(adapter);
@@ -183,8 +128,8 @@ public class News extends AppCompatActivity implements NavigationView.OnNavigati
 
     private void setupTabIcons() {
 
-        tabLayout.getTabAt(1).setText("LOCAL");
-        tabLayout.getTabAt(0).setText("INTERNATIONAL");
+        tabLayout.getTabAt(0).setText("SAVED ASSIGNMENTS");
+        tabLayout.getTabAt(1).setText("DOWNLOAD ");
 
 
     }

@@ -114,4 +114,6 @@
     <string name="title_activity_courses_list">CoursesList</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_news">News</string>
+    <string name="title_activity_assignments">Assignments</string>
+    <string name="title_activity_events">Events</string>
 </resources>

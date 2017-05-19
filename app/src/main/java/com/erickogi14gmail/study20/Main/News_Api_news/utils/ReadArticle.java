@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.erickogi14gmail.study20.Main.Configs.api;
-import com.erickogi14gmail.study20.Main.News_Api_news.MyAppWebViewClient;
 import com.erickogi14gmail.study20.Main.mPicasso.PicassoClient;
 import com.erickogi14gmail.study20.R;
 

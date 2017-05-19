@@ -1,25 +1,31 @@
-package com.erickogi14gmail.study20.Main.addContent;
+package com.erickogi14gmail.study20.Main.Assignments;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.erickogi14gmail.study20.Main.Adapters.MainRecyclerViewAdapter;
+import com.android.volley.RequestQueue;
+import com.erickogi14gmail.study20.Main.Adapters.AssignmentsAdapter;
 import com.erickogi14gmail.study20.Main.Configs.api;
 import com.erickogi14gmail.study20.Main.DB.DBOperations;
 import com.erickogi14gmail.study20.Main.Read.ReadActivity;
+import com.erickogi14gmail.study20.Main.models.Assignment_content_model;
 import com.erickogi14gmail.study20.Main.models.Course_model;
 import com.erickogi14gmail.study20.Main.utills.HidingScrollListener;
 import com.erickogi14gmail.study20.Main.utills.RecyclerTouchListener;
@@ -28,20 +34,29 @@ import com.muddzdev.styleabletoastlibrary.StyleableToast;
 
 import java.util.ArrayList;
 
-
 /**
- * Created by kimani kogi on 5/17/2017.
+ * Created by kimani kogi on 5/18/2017.
  */
 
-public class CoueseList extends Fragment {
+public class fragment_saved_assignments extends Fragment {
     static View view;
+    static RequestQueue queue;
+    static Context context;
     static RecyclerView.LayoutManager mLayoutManager;
-    Cursor cursor;
-    DBOperations dbOperations = new DBOperations(getContext());
-    ArrayList<Course_model> data_model;
-    RecyclerView lv;
+    static ArrayList<Course_model> course_model;
+    AssignmentsAdapter mainRecyclerViewAdapter;
+    ArrayList<Course_model> displayedList;
+    AssignmentsAdapter adapter;
+    DBOperations dbOperations;
     SwipeRefreshLayout swipe_refresh_layout;
-    private MainRecyclerViewAdapter adapter;
+    RecyclerView recyclerView_vertical;
+    ProgressDialog progressDialog;
+    RecyclerView lv;
+    ArrayList<Assignment_content_model> data_model;
+    private Toolbar mToolbar;
+    private int progressBarStatus;
+    private Handler progressBarHandler = new Handler();
+    private StaggeredGridLayoutManager mStaggeredLayoutManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -84,11 +99,12 @@ public class CoueseList extends Fragment {
             @Override
             public void onClick(View view, int position) {
                 Intent intent = new Intent(getActivity(), ReadActivity.class);
-                intent.putExtra(api.COURSE_CODE, data_model.get(position).getCOURSE_ID());
-                intent.putExtra(api.ASSIGNMENT_ID, "null");
+                intent.putExtra(api.ASSIGNMENT_ID, String.valueOf(data_model.get(position).getASSIGNMENT_ID()));
 
                 intent.putExtra(api.POST_URL, "null");
 
+                intent.putExtra(api.COURSE_CODE, "null");
+                //  Log.d("kk",data_model.get(position).getASSIGNMENT_ID())
                 startActivity(intent);
 
             }
@@ -98,7 +114,7 @@ public class CoueseList extends Fragment {
 
                 final Dialog dialog = new Dialog(getContext());
                 dialog.setContentView(R.layout.remove_unit_dialog);
-                dialog.setTitle("DELETE COURSE");
+                dialog.setTitle("DELETE ASSIGNMENT");
                 Button button_delete = (Button) dialog.findViewById(R.id.dialog_button_yes);
                 Button button_keep = (Button) dialog.findViewById(R.id.dialog_button_no);
 
@@ -107,8 +123,8 @@ public class CoueseList extends Fragment {
                     public void onClick(View v) {
                         DBOperations dbOperations = new DBOperations(getContext());
 
-                        if (dbOperations.deleteContent(data_model.get(position).getCOURSE_ID())) {
-                            dbOperations.deleteCourse(data_model.get(position).getCOURSE_ID());
+                        if (dbOperations.deleteAssignment(String.valueOf(data_model.get(position).getASSIGNMENT_ID()))) {
+                            // dbOperations.deleteCourse(data_model.get(position).getCOURSE_ID());
                         }
 
                         dialog.dismiss();
@@ -151,7 +167,7 @@ public class CoueseList extends Fragment {
     void setRecyclerView() {
 //
         DBOperations dbOperations = new DBOperations(getContext());
-        data_model = dbOperations.getCourseList();
+        data_model = dbOperations.getAssignmentList();
         try {
             if (data_model.isEmpty() || data_model.equals(null)) {
                 swipe_refresh_layout.setRefreshing(false);
@@ -167,7 +183,7 @@ public class CoueseList extends Fragment {
             } else {
 
 
-                adapter = new MainRecyclerViewAdapter(getContext(), data_model);
+                adapter = new AssignmentsAdapter(getContext(), data_model);
                 adapter.notifyDataSetChanged();
 
 

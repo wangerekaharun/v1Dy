@@ -5,22 +5,27 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
-import android.util.Log;
 
+import com.erickogi14gmail.study20.Main.models.Assignment_content_model;
 import com.erickogi14gmail.study20.Main.models.Chapters;
 import com.erickogi14gmail.study20.Main.models.Content_model;
 import com.erickogi14gmail.study20.Main.models.Course_model;
 
 import java.util.ArrayList;
 
-import static com.erickogi14gmail.study20.Main.DB.DBKeys.KEY_CHAPTER_CONTENT;
-import static com.erickogi14gmail.study20.Main.DB.DBKeys.KEY_CHAPTER_NO;
-import static com.erickogi14gmail.study20.Main.DB.DBKeys.KEY_CHAPTER_TITLE;
+import static com.erickogi14gmail.study20.Main.DB.DBKeys.KEY_ASSIGNMENT_CODE;
+import static com.erickogi14gmail.study20.Main.DB.DBKeys.KEY_ASSIGNMENT_CONTENT;
+import static com.erickogi14gmail.study20.Main.DB.DBKeys.KEY_ASSIGNMENT_COURSE_NAME;
+import static com.erickogi14gmail.study20.Main.DB.DBKeys.KEY_ASSIGNMENT_DONE_BY;
+import static com.erickogi14gmail.study20.Main.DB.DBKeys.KEY_ASSIGNMENT_DONE_ON;
+import static com.erickogi14gmail.study20.Main.DB.DBKeys.KEY_ASSIGNMENT_ID;
+import static com.erickogi14gmail.study20.Main.DB.DBKeys.KEY_ASSIGNMENT_NAME;
+import static com.erickogi14gmail.study20.Main.DB.DBKeys.KEY_ASSIGNMENT_PUBLISHED_BY;
+import static com.erickogi14gmail.study20.Main.DB.DBKeys.KEY_ASSIGNMENT_PUBLISHED_ON;
+import static com.erickogi14gmail.study20.Main.DB.DBKeys.KEY_ASSIGNMENT_TYPE;
 import static com.erickogi14gmail.study20.Main.DB.DBKeys.KEY_COURSE_ID;
 import static com.erickogi14gmail.study20.Main.DB.DBKeys.KEY_COURSE_TITLE;
-import static com.erickogi14gmail.study20.Main.DB.DBKeys.KEY_ID;
 import static com.erickogi14gmail.study20.Main.DB.DBKeys.KEY_NO_OF_CHAPTERS;
-import static com.erickogi14gmail.study20.Main.DB.DBKeys.KEY_UPDATED_ON;
 import static com.erickogi14gmail.study20.Main.DB.DBKeys.KEY_UPLOADED_BY;
 
 /**
@@ -57,69 +62,27 @@ public class DBOperations {
                 if (insert.executeInsert() >= 1) {
                     success = true;
 
-                }
-                else {
+                } else {
 
                 }
             }
             db.close();
-        }
-        catch (Exception l){
+        } catch (Exception l) {
             l.printStackTrace();
 
         }
         return success;
     }
 
-    public int insertContent(DBKeys Keys) {
-        //Open connection to write data
-        SQLiteDatabase db = dbHandler.getWritableDatabase();
-        ContentValues values = new ContentValues();
-
-        values.put(KEY_COURSE_ID, Keys.COURSE_ID);
-        values.put(KEY_COURSE_TITLE, Keys.COURSE_TITLE);
-
-        values.put(KEY_CHAPTER_NO, Keys.CHAPTER_NO);
-        values.put(KEY_CHAPTER_TITLE, Keys.CHAPTER_TITLE);
-        values.put(KEY_CHAPTER_CONTENT, Keys.CHAPTER_CONTENT);
-
-        values.put(KEY_UPDATED_ON, Keys.UPDATED_ON);
-
-
-        // Inserting Row
-        long keys_Id = db.insert(DBKeys.CONTENT_TABLE, null, values);
-        db.close(); // Closing database connection
-        return (int) keys_Id;
-    }
-
-    public int insertCourse(DBKeys Keys) {
-        //Open connection to write data
-        SQLiteDatabase db = dbHandler.getWritableDatabase();
-        ContentValues values = new ContentValues();
-
-        values.put(KEY_COURSE_ID, Keys.COURSE_ID);
-        values.put(KEY_COURSE_TITLE, Keys.COURSE_TITLE);
-
-        values.put(KEY_NO_OF_CHAPTERS, Keys.NO_OF_CHAPTERS);
-
-
-        values.put(KEY_UPLOADED_BY, Keys.UPLOADED_BY);
-
-
-        // Inserting Row
-        long keys_Id = db.insert(DBKeys.COURSES_TABLE, null, values);
-        db.close(); // Closing database connection
-        return (int) keys_Id;
-    }
 
     public boolean deleteCourse(String rowId) {
         SQLiteDatabase db = dbHandler.getWritableDatabase();
-        return db.delete(DBKeys.COURSES_TABLE,KEY_COURSE_ID +  "= '" + rowId+"' ", null) > 0;
+        return db.delete(DBKeys.COURSES_TABLE, KEY_COURSE_ID + "= '" + rowId + "' ", null) > 0;
     }
 
     public boolean deleteContent(String rowId) {
         SQLiteDatabase db = dbHandler.getWritableDatabase();
-        return db.delete(DBKeys.CONTENT_TABLE, KEY_COURSE_ID + "= '" + rowId+"' ", null) > 0;
+        return db.delete(DBKeys.CONTENT_TABLE, KEY_COURSE_ID + "= '" + rowId + "' ", null) > 0;
     }
 
 
@@ -226,10 +189,10 @@ public class DBOperations {
     }
 
 
-    public String getChapterContentByChapterByCourse(String courseId, String chapterNo) {
+    public String[] getChapterContentByChapterByCourse(String courseId, String chapterNo) {
         //Open connection to read only
         SQLiteDatabase db = dbHandler.getReadableDatabase();
-        String html = null;
+        String html[] = new String[2];
 
         ArrayList<Chapters> data = new ArrayList<>();
         String QUERY = "SELECT * FROM " + DBKeys.CONTENT_TABLE + " WHERE " + DBKeys.KEY_COURSE_ID + " = '" + courseId + "' AND " + DBKeys.KEY_CHAPTER_NO + " ='" + chapterNo + "'";
@@ -242,7 +205,8 @@ public class DBOperations {
             if (cursor.moveToNext()) {
                 Chapters pojo = new Chapters();
 
-                html = cursor.getString(5);
+                html[0] = cursor.getString(5);
+                html[1] = cursor.getString(2);
 
 
 //                pojo.setChapter_title(cursor.getString(5));
@@ -331,22 +295,21 @@ public class DBOperations {
 
     }
 
-
     public boolean getCourseById(String courseId) {
         //Open connection to read only
         SQLiteDatabase db = dbHandler.getReadableDatabase();
 
-        boolean isThere=false;
+        boolean isThere = false;
         ArrayList<Course_model> data = new ArrayList<>();
-        String QUERY = "SELECT * FROM " + DBKeys.COURSES_TABLE+ "  WHERE " +DBKeys.KEY_COURSE_ID+ " = '"+courseId+ "' ";
+        String QUERY = "SELECT * FROM " + DBKeys.COURSES_TABLE + "  WHERE " + DBKeys.KEY_COURSE_ID + " = '" + courseId + "' ";
 
 
         Cursor cursor = db.rawQuery(QUERY, null);
 
         if (!cursor.isLast()) {
 
-            if(cursor.moveToNext()) {
-               isThere=true;
+            if (cursor.moveToNext()) {
+                isThere = true;
             }
         }
         db.close();
@@ -357,6 +320,180 @@ public class DBOperations {
 
 
     }
+
+
+    ///////Assignments
+
+
+    public boolean inAssignment(Assignment_content_model data) {
+        boolean success = false;
+
+        SQLiteDatabase db = dbHandler.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+
+        values.put(KEY_ASSIGNMENT_ID, data.getASSIGNMENT_ID());
+        values.put(KEY_ASSIGNMENT_NAME, data.getASSIGNMENT_NAME());
+
+
+        values.put(KEY_ASSIGNMENT_CODE, data.getASSIGNMENT_CODE());
+        values.put(KEY_ASSIGNMENT_DONE_BY, data.getASSIGNMENT_DONE_BY());
+
+        values.put(KEY_ASSIGNMENT_PUBLISHED_BY, data.getASSIGNMENT_PUBLISHED_BY());
+
+
+        values.put(KEY_ASSIGNMENT_PUBLISHED_ON, data.getASSIGNMENT_PUBLISHED_ON());
+
+        values.put(KEY_ASSIGNMENT_DONE_ON, data.getASSIGNMENT_DONE_ON());
+        values.put(KEY_ASSIGNMENT_COURSE_NAME, data.getASSIGNMENT_COURSE_NAME());
+
+        values.put(KEY_ASSIGNMENT_TYPE, data.getASSIGNMENT_TYPE());
+
+
+        values.put(KEY_ASSIGNMENT_CONTENT, data.getASSIGNMENT_CONTENT());
+
+
+        // Inserting Row
+        if (db.insert(DBKeys.ASSIGNMENT_CONTENT_TABLE, null, values) >= 1) {
+            success = true;
+        }
+        db.close();
+
+
+        return success;
+
+
+    }
+
+    public ArrayList<Assignment_content_model> getAssignmentList() {
+        //Open connection to read only
+        SQLiteDatabase db = dbHandler.getReadableDatabase();
+
+
+        ArrayList<Assignment_content_model> data = new ArrayList<>();
+        String QUERY = "SELECT * FROM " + DBKeys.ASSIGNMENT_CONTENT_TABLE;
+
+
+        Cursor cursor = db.rawQuery(QUERY, null);
+
+        if (!cursor.isLast()) {
+
+            while (cursor.moveToNext()) {
+                Assignment_content_model pojo = new Assignment_content_model();
+
+
+                pojo.setASSIGNMENT_ID(cursor.getInt(0));
+                pojo.setASSIGNMENT_NAME(cursor.getString(1));
+                pojo.setASSIGNMENT_CODE(cursor.getString(2));
+                pojo.setASSIGNMENT_DONE_BY(cursor.getString(3));
+                pojo.setASSIGNMENT_PUBLISHED_BY(cursor.getString(4));
+                pojo.setASSIGNMENT_PUBLISHED_ON(cursor.getString(5));
+                pojo.setASSIGNMENT_DONE_ON(cursor.getString(6));
+                pojo.setASSIGNMENT_COURSE_NAME(cursor.getString(7));
+                pojo.setASSIGNMENT_TYPE(cursor.getString(8));
+                pojo.setASSIGNMENT_CONTENT(cursor.getString(9));
+
+
+                data.add(pojo);
+
+            }
+        }
+        db.close();
+        // looping through all rows and adding to list
+
+        if (cursor == null) {
+            return null;
+        } else if (!cursor.moveToFirst()) {
+            cursor.close();
+            return null;
+        }
+        return data;
+
+
+    }
+
+    public ArrayList<Assignment_content_model> getAssignmentListById(String assId) {
+        //Open connection to read only
+        SQLiteDatabase db = dbHandler.getReadableDatabase();
+
+
+        ArrayList<Assignment_content_model> data = new ArrayList<>();
+        String QUERY = "SELECT * FROM " + DBKeys.ASSIGNMENT_CONTENT_TABLE + "  WHERE " + DBKeys.KEY_ASSIGNMENT_ID + " = '" + assId + "' ";
+
+
+        Cursor cursor = db.rawQuery(QUERY, null);
+
+        if (!cursor.isLast()) {
+
+            while (cursor.moveToNext()) {
+                Assignment_content_model pojo = new Assignment_content_model();
+
+
+                pojo.setASSIGNMENT_ID(cursor.getInt(0));
+                pojo.setASSIGNMENT_NAME(cursor.getString(1));
+                pojo.setASSIGNMENT_CODE(cursor.getString(2));
+                pojo.setASSIGNMENT_DONE_BY(cursor.getString(3));
+                pojo.setASSIGNMENT_PUBLISHED_BY(cursor.getString(4));
+                pojo.setASSIGNMENT_PUBLISHED_ON(cursor.getString(5));
+                pojo.setASSIGNMENT_DONE_ON(cursor.getString(6));
+                pojo.setASSIGNMENT_COURSE_NAME(cursor.getString(7));
+                pojo.setASSIGNMENT_TYPE(cursor.getString(8));
+                pojo.setASSIGNMENT_CONTENT(cursor.getString(9));
+
+
+                data.add(pojo);
+
+            }
+        }
+        db.close();
+        // looping through all rows and adding to list
+
+        if (cursor == null) {
+            return null;
+        } else if (!cursor.moveToFirst()) {
+            cursor.close();
+            return null;
+        }
+        return data;
+
+
+    }
+
+    public boolean getAssignmentById(String assId) {
+        //Open connection to read only
+        SQLiteDatabase db = dbHandler.getReadableDatabase();
+
+        boolean isThere = false;
+
+        String QUERY = "SELECT * FROM " + DBKeys.ASSIGNMENT_CONTENT_TABLE + "  WHERE " + DBKeys.KEY_ASSIGNMENT_ID + " = '" + assId + "' ";
+
+
+        Cursor cursor = db.rawQuery(QUERY, null);
+
+        if (!cursor.isLast()) {
+
+            if(cursor.moveToNext()) {
+                isThere = true;
+            }
+        }
+        db.close();
+        // looping through all rows and adding to list
+
+
+        return isThere;
+
+
+    }
+
+    public boolean deleteAssignment(String rowId) {
+        SQLiteDatabase db = dbHandler.getWritableDatabase();
+        return db.delete(DBKeys.ASSIGNMENT_CONTENT_TABLE, KEY_ASSIGNMENT_ID + "= '" + rowId + "' ", null) > 0;
+    }
+
+
+
+
+
 }
 
 

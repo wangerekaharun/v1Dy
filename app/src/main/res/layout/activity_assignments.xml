@@ -9,7 +9,7 @@
     tools:openDrawer="start">
 
     <include
-        layout="@layout/app_bar_news"
+        layout="@layout/app_bar_assignments"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
@@ -20,6 +20,6 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
 
-        app:menu="@menu/activity_news_drawer" />
-    <!--app:headerLayout="@layout/nav_header_news"-->
+        app:menu="@menu/activity_assignments_drawer" />
+
 </android.support.v4.widget.DrawerLayout>

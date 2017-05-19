@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.erickogi14gmail.study20.Main.News_Api_news.News">
+    tools:context="com.erickogi14gmail.study20.Main.Assignments.Assignments">
+
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -19,7 +20,16 @@
             android:layout_marginTop="10dp"
             android:background="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+            <android.support.v7.widget.SearchView
+                android:id="@+id/search_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Search By Course Code" />
+
+
+        </android.support.v7.widget.Toolbar>
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs"
@@ -31,7 +41,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_news" />
+    <include layout="@layout/content_assignments" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
@@ -45,6 +55,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_menu_save" />
+        app:srcCompat="@android:drawable/ic_menu_search" />
 
 </android.support.design.widget.CoordinatorLayout>

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
 
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.erickogi14gmail.study20.Main.News_Api_news.ReadArticle"
+    tools:context="com.erickogi14gmail.study20.Main.News_Api_news.utils.ReadArticle"
     tools:showIn="@layout/activity_read_article">
 
     <ProgressBar

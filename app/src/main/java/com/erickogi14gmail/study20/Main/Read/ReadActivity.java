@@ -3,8 +3,6 @@ package com.erickogi14gmail.study20.Main.Read;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -13,12 +11,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
-import android.widget.Toast;
 
 import com.erickogi14gmail.study20.Main.Configs.api;
 import com.erickogi14gmail.study20.Main.DB.DBOperations;
+import com.erickogi14gmail.study20.Main.models.Assignment_content_model;
 import com.erickogi14gmail.study20.Main.models.Chapters;
 import com.erickogi14gmail.study20.Main.utills.TouchyWebView;
 import com.erickogi14gmail.study20.R;
@@ -30,10 +29,15 @@ public class ReadActivity extends AppCompatActivity
     NavigationView navigationView;
     TouchyWebView webView;
     DBOperations dbOperations = new DBOperations(this);
+    String cont[];
+    FloatingActionButton fabP, fab;
+    Toolbar toolbar;
     private String code=null;
+    private String assId = "";
+    private String html;
+    private String url;
     private  int nav_id;
     private  String nav_items[];
-    FloatingActionButton fabP,fab;
 
     protected void setNavigationItems(String[] items) {
         nav_items=items;
@@ -54,7 +58,7 @@ public class ReadActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -64,18 +68,20 @@ public class ReadActivity extends AppCompatActivity
             public void onClick(View view) {
                int to=nav_id+1;
                 if(to<nav_items.length){
+                    getSupportActionBar().setTitle(nav_items[to]);
                     setWebView(dbOperations.getChapterContentByChapterByTitle(code,nav_items[to]));
                     nav_id=to;
                 }
             }
         });
 
-         fabP= (FloatingActionButton) findViewById(R.id.fab_prev);
+        fabP = (FloatingActionButton) findViewById(R.id.fab_prev);
         fabP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int to=nav_id-1;
                 if(to<nav_items.length&&to>=0){
+                    getSupportActionBar().setTitle(nav_items[to]);
                     setWebView(dbOperations.getChapterContentByChapterByTitle(code,nav_items[to]));
                     nav_id=to;
                 }
@@ -87,7 +93,7 @@ public class ReadActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
+        webView = (TouchyWebView) findViewById(R.id.webView);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
 
         navigationView.setNavigationItemSelectedListener(this);
@@ -95,45 +101,66 @@ public class ReadActivity extends AppCompatActivity
 
         Intent intent = getIntent();
         code = intent.getStringExtra(api.COURSE_CODE);
-        ArrayList<String> list = new ArrayList<>();
-        ArrayList<Chapters> chapters = dbOperations.getChaptersByCourse(code);
-        for (int count = 0; count < chapters.size(); count++) {
+        assId = intent.getStringExtra(api.ASSIGNMENT_ID);
+        url = intent.getStringExtra(api.POST_URL);
 
-            list.add(chapters.get(count).getChapter_title());
+        if (assId.equals("null") && url.equals("null")) {
 
-        }
-        String[] Arr = new String[list.size()];
-        Arr = list.toArray(Arr);
-        setNavigationItems(Arr);
+            ArrayList<String> list = new ArrayList<>();
+            ArrayList<Chapters> chapters = dbOperations.getChaptersByCourse(code);
+            for (int count = 0; count < chapters.size(); count++) {
 
-        String html = dbOperations.getChapterContentByChapterByCourse(code, "1");
+                list.add(chapters.get(count).getChapter_title());
 
-
-        webView = (TouchyWebView) findViewById(R.id.webView);
-        webView.setOnScrollChangedCallback(new TouchyWebView.OnScrollChangedCallback() {
-            @Override
-            public void onScrollChange(WebView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if (scrollY > oldScrollY && scrollY > 0) {
-
-                    fab.hide();
-                    fabP.hide();
-                  //  Toast.makeText(ReadActivity.this, "Scrolled", Toast.LENGTH_SHORT).show();
-                }
-                if (scrollY < oldScrollY) {
-                    if (nav_id>=1){
-                        fabP.show();
-                    }
-                    if(nav_id<nav_items.length-1) {
-                        fab.show();
-                    }
-
-                  //  Toast.makeText(ReadActivity.this, "Scrolled", Toast.LENGTH_SHORT).show();
-                }
             }
-        });
+            String[] Arr = new String[list.size()];
+            Arr = list.toArray(Arr);
+            setNavigationItems(Arr);
 
-         setWebView(html);
-        nav_id=0;
+            cont = dbOperations.getChapterContentByChapterByCourse(code, "1");
+
+            html = cont[0];
+            getSupportActionBar().setTitle(cont[1]);
+
+
+            webView.setOnScrollChangedCallback(new TouchyWebView.OnScrollChangedCallback() {
+                @Override
+                public void onScrollChange(WebView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                    if (scrollY > oldScrollY && scrollY > 0) {
+
+                        fab.hide();
+                        fabP.hide();
+                        //  Toast.makeText(ReadActivity.this, "Scrolled", Toast.LENGTH_SHORT).show();
+                    }
+                    if (scrollY < oldScrollY) {
+                        if (nav_id >= 1) {
+                            fabP.show();
+                        }
+                        if (nav_id < nav_items.length - 1) {
+                            fab.show();
+                        }
+
+                        //  Toast.makeText(ReadActivity.this, "Scrolled", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+            setWebView(html);
+            nav_id = 0;
+        } else if (code.equals("null") && url.equals("null")) {
+            ArrayList<Assignment_content_model> data = dbOperations.getAssignmentListById(assId);
+            html = data.get(0).getASSIGNMENT_CONTENT();
+            getSupportActionBar().setTitle(data.get(0).getASSIGNMENT_NAME());
+
+            setWebView(html);
+            nav_id = 0;
+        } else {
+            html = url;
+            webView.loadUrl(html);
+
+            webView.getSettings().setJavaScriptEnabled(true);
+        }
+
 
 
 
@@ -197,7 +224,7 @@ private void setWebView(String html){
         // Handle navigation view item clicks here.
         String topicName = item.getTitle().toString();
         nav_id=item.getItemId();
-
+        getSupportActionBar().setTitle(topicName);
 
 
         setWebView( dbOperations.getChapterContentByChapterByTitle(code,topicName));

@@ -43,6 +43,66 @@ public class DBHandler extends SQLiteOpenHelper {
 
             + ")";
 
+
+    String CREATE_TABLE_ASSIGNMENTS = "CREATE TABLE " + DBKeys.ASSIGNMENTS_TABLE + "("
+            + DBKeys.KEY_ASSIGNMENT_ID + " INTEGER PRIMARY KEY  ,"
+
+
+            + DBKeys.KEY_ASSIGNMENT_NAME + " TEXT, "
+
+            + DBKeys.KEY_ASSIGNMENT_CODE + " VARCHAR ,"
+
+            + DBKeys.KEY_ASSIGNMENT_DONE_BY + " VARCHAR ,"
+
+            + DBKeys.KEY_ASSIGNMENT_TYPE + " VARCHAR ,"
+
+            + DBKeys.KEY_ASSIGNMENT_COURSE_NAME + " VARCHAR"
+
+            + ")";
+    String CREATE_TABLE_ASSIGNMENTS_CONTENT = "CREATE TABLE " + DBKeys.ASSIGNMENT_CONTENT_TABLE + "("
+            + DBKeys.KEY_ASSIGNMENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
+
+            + DBKeys.KEY_ASSIGNMENT_NAME + " TEXT, "
+
+            + DBKeys.KEY_ASSIGNMENT_CODE + " TEXT, "
+
+            + DBKeys.KEY_ASSIGNMENT_DONE_BY + " VARCHAR, "
+
+            + DBKeys.KEY_ASSIGNMENT_PUBLISHED_BY + " VARCHAR, "
+
+            + DBKeys.KEY_ASSIGNMENT_PUBLISHED_ON + " VARCHAR ,"
+
+            + DBKeys.KEY_ASSIGNMENT_DONE_ON + " VARCHAR ,"
+
+            + DBKeys.KEY_ASSIGNMENT_COURSE_NAME + " VARCHAR ,"
+
+            + DBKeys.KEY_ASSIGNMENT_TYPE + " VARCHAR ,"
+
+            + DBKeys.KEY_ASSIGNMENT_CONTENT + " TEXT "
+
+
+            + ")";
+//
+//    values.put(KEY_ASSIGNMENT_ID,data.getASSIGNMENT_ID());
+//    values.put(KEY_ASSIGNMENT_NAME,data.getASSIGNMENT_NAME());
+//
+//
+//    values.put(KEY_ASSIGNMENT_CODE, data.getASSIGNMENT_CODE());
+//    values.put(KEY_ASSIGNMENT_DONE_BY, data.getASSIGNMENT_DONE_BY());
+//
+//    values.put(KEY_ASSIGNMENT_PUBLISHED_BY, data.getASSIGNMENT_PUBLISHED_BY());
+//
+//
+//    values.put(KEY_ASSIGNMENT_PUBLISHED_ON, data.getASSIGNMENT_PUBLISHED_ON());
+//
+//    values.put(KEY_ASSIGNMENT_DONE_ON, data.getASSIGNMENT_DONE_ON());
+//    values.put(KEY_COURSE_TITLE, data.getASSIGNMENT_COURSE_NAME());
+//
+//    values.put(KEY_ASSIGNMENT_TYPE, data.getASSIGNMENT_TYPE());
+//
+//
+//    values.put(KEY_ASSIGNMENT_CONTENT, data.getASSIGNMENT_CONTENT());
+
     public DBHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -52,12 +112,17 @@ public class DBHandler extends SQLiteOpenHelper {
 
         db.execSQL(CREATE_TABLE_COURSES);
         db.execSQL(CREATE_TABLE_CONTENT);
+        db.execSQL(CREATE_TABLE_ASSIGNMENTS);
+        db.execSQL(CREATE_TABLE_ASSIGNMENTS_CONTENT);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + DBKeys.COURSES_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + DBKeys.CONTENT_TABLE);
+
+        db.execSQL("DROP TABLE IF EXISTS " + DBKeys.ASSIGNMENTS_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + DBKeys.ASSIGNMENT_CONTENT_TABLE);
 
 
         // Create tables again

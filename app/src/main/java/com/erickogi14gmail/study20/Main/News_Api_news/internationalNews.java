@@ -1,4 +1,4 @@
-package com.erickogi14gmail.study20.Main.News_Api_news.utils;
+package com.erickogi14gmail.study20.Main.News_Api_news;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,16 +6,13 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -25,6 +22,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.erickogi14gmail.study20.Main.Configs.api;
+import com.erickogi14gmail.study20.Main.News_Api_news.utils.ArticlesJsonParser;
+import com.erickogi14gmail.study20.Main.News_Api_news.utils.ArticlesModel;
+import com.erickogi14gmail.study20.Main.News_Api_news.utils.ArticlesModelAdapter;
+import com.erickogi14gmail.study20.Main.News_Api_news.utils.ReadArticle;
+import com.erickogi14gmail.study20.Main.News_Api_news.utils.SorcesModelAdapter;
+import com.erickogi14gmail.study20.Main.News_Api_news.utils.SourcesJsonParser;
+import com.erickogi14gmail.study20.Main.News_Api_news.utils.SourcesModel;
 import com.erickogi14gmail.study20.Main.utills.RecyclerTouchListener;
 import com.erickogi14gmail.study20.Main.utills.StaggeredHiddingScrollListener;
 import com.erickogi14gmail.study20.R;
@@ -32,58 +36,64 @@ import com.muddzdev.styleabletoastlibrary.StyleableToast;
 
 import java.util.ArrayList;
 
-public class Categories extends AppCompatActivity {
+/**
+ * Created by kimani kogi on 5/17/2017.
+ */
+
+public class internationalNews extends android.support.v4.app.Fragment {
     static RequestQueue queue;
     static Context context;
     static RecyclerView.LayoutManager mLayoutManager;
     static View view;
     static View viewSource;
     static ArrayList<ArticlesModel> articles;
+    private static boolean isListView;
     SwipeRefreshLayout swipe_refresh_layout;
     RecyclerView recyclerView_vertical;
     RecyclerView recyclerView_horizontal;
     FloatingActionButton fab;
     ArrayList<SourcesModel> sources;
-    String category;
     private StaggeredGridLayoutManager mStaggeredLayoutManager;
-    private boolean isListView;
-    private Menu menu;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_categories);
+    public void start() {
+        refresh();
 
-        Intent intent = getIntent();
+        getRecyclerView_sourcesC();
+    }
 
-        category = intent.getStringExtra(api.KEY_CATEGORY_INTENT);
+    void getRecyclerView_sourcesC() {
+        if (News.category.equals("")) {
+            requestDataSourcesC(api.SOURCES_END_POINT);
+        } else {
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(intent.getStringExtra(api.KEY_CATEGORY_LABEL));
-        setSupportActionBar(toolbar);
+            requestDataSourcesC(api.SOURCES_END_POINT + "?category=" + News.category);
+        }
+        // requestDataSources(api.SOURCES_END_POINT);
+    }
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-//        fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Downloading in progress", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-
-
-        mStaggeredLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
-
-        recyclerView_horizontal = (RecyclerView) findViewById(R.id.all_news_horizontal_recyclerView);
-        recyclerView_vertical = (RecyclerView) findViewById(R.id.all_news_vertical_recyclerView);
-        swipe_refresh_layout = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+    private void refresh() {
+        swipe_refresh_layout = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
         swipe_refresh_layout.setProgressBackgroundColorSchemeResource(R.color.colorAccent);
         swipe_refresh_layout.setBackgroundResource(android.R.color.white);
         swipe_refresh_layout.setColorSchemeResources(android.R.color.white, android.R.color.holo_purple, android.R.color.white);
 
         swipe_refresh_layout.setRefreshing(true);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
+        /**
+         * Inflate the layout for this fragment
+         */
+
+
+        view = inflater.inflate(R.layout.fragment_all_news, container, false);
+        mStaggeredLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
+
+        recyclerView_horizontal = (RecyclerView) view.findViewById(R.id.all_news_horizontal_recyclerView);
+        recyclerView_vertical = (RecyclerView) view.findViewById(R.id.all_news_vertical_recyclerView);
+        refresh();
 
         swipe_refresh_layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -93,6 +103,8 @@ public class Categories extends AppCompatActivity {
 
             }
         });
+
+        fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
         recyclerView_horizontal.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView_horizontal, new RecyclerTouchListener.ClickListener() {
 
             @Override
@@ -101,10 +113,9 @@ public class Categories extends AppCompatActivity {
                     viewSource.setBackgroundColor(Color.WHITE);
                 }
                 viewSource = view;
-                view.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                view.setBackgroundColor(Color.rgb(255, 144, 64));
                 swipe_refresh_layout.setRefreshing(true);
                 getRecyclerView_articles(sources.get(position).getId());
-
             }
 
             @Override
@@ -118,7 +129,7 @@ public class Categories extends AppCompatActivity {
 
             @Override
             public void onClick(View view, int position) {
-                Intent intent = new Intent(Categories.this, ReadArticle.class);
+                Intent intent = new Intent(getActivity(), ReadArticle.class);
                 intent.putExtra(api.KEY_URL_TAG, articles.get(position).getUrl());
                 intent.putExtra(api.KEY_URL_TO_IMAGE_TAG, articles.get(position).getUrlToImage());
 
@@ -145,43 +156,54 @@ public class Categories extends AppCompatActivity {
         });
         isListView = true;
         getRecyclerView_sources();
+
+        return view;
     }
 
+
     private void hideViews() {
-//fab.hide();
-        //int fabBottomMargin = 45;
-        //fab.animate().translationY(fab.getHeight() + fabBottomMargin).setInterpolator(new AccelerateInterpolator(2)).start();
+        fab.hide();
+        // int fabBottomMargin = 45;
+        // fab.animate().translationY(fab.getHeight() + fabBottomMargin).setInterpolator(new AccelerateInterpolator(2)).start();
     }
 
     private void showViews() {
-        //    fab.show();
+        fab.hide();
         // fab.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
 
     }
 
     public void setLayout(boolean isListView) {
-        this.isListView = isListView;
-        setRecyclerView_articles(articles);
+        try {
+            if (articles.size() > 1) {
+                setRecyclerView_articles(articles);
+            }
+        } catch (Exception nl) {
+
+        }
     }
 
     void getRecyclerView_sources() {
+        if (News.category.equals("")) {
+            requestDataSources(api.SOURCES_END_POINT);
+        } else {
 
-
-        requestDataSources(api.SOURCES_END_POINT + "?category=" + category);
+            requestDataSources(api.SOURCES_END_POINT + "?category=" + News.category);
+        }
+        // requestDataSources(api.SOURCES_END_POINT);
     }
 
     public void setRecyclerView_sources(ArrayList<SourcesModel> sourcesModelArrayList) {
         SorcesModelAdapter adapter;
         this.sources = sourcesModelArrayList;
-        adapter = new SorcesModelAdapter(sourcesModelArrayList, getApplicationContext());
+        adapter = new SorcesModelAdapter(sourcesModelArrayList, getContext());
         SourcesModel model = sourcesModelArrayList.get(0);
 
         adapter.notifyDataSetChanged();
-        swipe_refresh_layout = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
-        recyclerView_horizontal = (RecyclerView) findViewById(R.id.all_news_horizontal_recyclerView);
+        swipe_refresh_layout = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
+        recyclerView_horizontal = (RecyclerView) view.findViewById(R.id.all_news_horizontal_recyclerView);
         mStaggeredLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
         mLayoutManager = new LinearLayoutManager(getApplicationContext());
-
 
         recyclerView_horizontal.setLayoutManager(mStaggeredLayoutManager);
         recyclerView_horizontal.setItemAnimator(new DefaultItemAnimator());
@@ -203,14 +225,15 @@ public class Categories extends AppCompatActivity {
     public void setRecyclerView_articles(ArrayList<ArticlesModel> articlesModelArrayList) {
         articles = articlesModelArrayList;
         ArticlesModelAdapter adapter;
-        adapter = new ArticlesModelAdapter(articlesModelArrayList, getApplicationContext());
+
+        adapter = new ArticlesModelAdapter(articlesModelArrayList, getContext());
         adapter.notifyDataSetChanged();
-        swipe_refresh_layout = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
-        recyclerView_vertical = (RecyclerView) findViewById(R.id.all_news_vertical_recyclerView);
+
+        swipe_refresh_layout = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
+        recyclerView_vertical = (RecyclerView) view.findViewById(R.id.all_news_vertical_recyclerView);
 
         mLayoutManager = new LinearLayoutManager(getApplicationContext());
-
-        if (this.isListView) {
+        if (isListView) {
 
             mStaggeredLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
 
@@ -242,7 +265,7 @@ public class Categories extends AppCompatActivity {
 
                         if (response != null || !response.isEmpty()) {
 
-                            sourcesModelArrayList = SourcesJsonParser.parseData(response, api.ALL_TECH_SOURCES_PARSING_CODE);
+                            sourcesModelArrayList = SourcesJsonParser.parseData(response, api.ALL_SORUCES_PARSING_CODE);
 
                             setRecyclerView_sources(sourcesModelArrayList);
 
@@ -268,16 +291,10 @@ public class Categories extends AppCompatActivity {
 
                     }
                 });
-        queue = Volley.newRequestQueue(getApplicationContext());
+        queue = Volley.newRequestQueue(getContext());
         queue.add(stringRequest);
-        context = getApplicationContext();
+        context = getContext();
     }
-
-//    public Context getApplicationContext() {
-//        Context applicationContext = getContext();
-//        context = applicationContext;
-//        return applicationContext;
-//    }
 
     public void requestDataArticles(String uri) {
 
@@ -322,38 +339,52 @@ public class Categories extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main, menu);
-        this.menu = menu;
-        return true;
+    public Context getApplicationContext() {
+        Context applicationContext = getContext();
+        context = applicationContext;
+        return applicationContext;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_toggle) {
-            toggle();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+    public void requestDataSourcesC(String uri) {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, uri,
 
-    private void toggle() {
-        MenuItem item = menu.findItem(R.id.action_toggle);
-        if (isListView) {
-            mStaggeredLayoutManager.setSpanCount(2);
-            item.setIcon(R.drawable.ic_list_white_24dp);
-            item.setTitle("Show as list");
-            isListView = false;
-        } else {
-            mStaggeredLayoutManager.setSpanCount(1);
-            item.setIcon(R.drawable.ic_grid_on_white_24dp);
-            item.setTitle("Show as grid");
-            isListView = true;
-        }
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        ArrayList<SourcesModel> sourcesModelArrayList;
+
+                        if (response != null || !response.isEmpty()) {
+
+                            sourcesModelArrayList = SourcesJsonParser.parseData(response, api.ALL_SORUCES_PARSING_CODE);
+
+                            setRecyclerView_sources(sourcesModelArrayList);
+
+                        } else {
+                            swipe_refresh_layout.setRefreshing(false);
+                        }
+
+                    }
+                },
+
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+//                        StyleableToast st = new StyleableToast(getApplicationContext(), "Network error", Toast.LENGTH_SHORT);
+//                        st.setBackgroundColor(Color.parseColor("#ff9040"));
+//                        st.setTextColor(Color.WHITE);
+//                        st.setIcon(R.drawable.ic_error_outline_white_24dp);
+//
+//                        st.setMaxAlpha();
+//                        st.show();
+                        swipe_refresh_layout.setRefreshing(false);
+
+
+                    }
+                });
+        queue.add(stringRequest);
     }
 }
+
+
+
 

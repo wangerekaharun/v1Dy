@@ -39,6 +39,7 @@
             android:textStyle="bold|italic" />
 
             <TextView
+
                 android:id="@+id/list_item_code"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

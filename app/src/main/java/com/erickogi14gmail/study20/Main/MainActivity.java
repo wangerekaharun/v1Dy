@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.erickogi14gmail.study20.Main.Adapters.CustomAndroidGridViewAdapter;
+import com.erickogi14gmail.study20.Main.Assignments.Assignments;
 import com.erickogi14gmail.study20.Main.Configs.api;
 import com.erickogi14gmail.study20.Main.News_Api_news.News;
 import com.erickogi14gmail.study20.Main.addContent.AddCourse;
@@ -75,6 +76,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         SharedPreferences sharedPreferences = getSharedPreferences(api.SHARED_PREF_NAME, Context.MODE_PRIVATE);
         loggedIn = sharedPreferences.getBoolean(api.LOGGEDIN_SHARED_PREF, false);
+        loggedIn = true;
         Log.d("loginStatus",String.valueOf(loggedIn));
         if(!loggedIn){
             //We will start the Profile Activity
@@ -104,17 +106,17 @@ public class MainActivity extends AppCompatActivity
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     if (position == 0) {
-                        //Software.setText(String.valueOf(R.string.chapter));
-
-
                         Intent two = new Intent(MainActivity.this, AddCourse.class);
                         startActivity(two);
 
                     } else if (position == 2) {
-                        //Software.setText(String.valueOf(R.string.chapter));
-
 
                         Intent two = new Intent(MainActivity.this, News.class);
+                        startActivity(two);
+
+                    } else if (position == 1) {
+
+                        Intent two = new Intent(MainActivity.this, Assignments.class);
                         startActivity(two);
 
                     }
@@ -157,25 +159,17 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
+
+
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+//
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

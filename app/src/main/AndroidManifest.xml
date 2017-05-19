@@ -60,6 +60,15 @@
         <activity
             android:name=".Main.News_Api_news.utils.ReadArticle"
             android:label="@string/title_activity_read_article"
+            android:parentActivityName=".Main.News_Api_news.News"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Main.Assignments.Assignments"
+            android:label="@string/title_activity_assignments"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Main.Events.Events"
+            android:label="@string/title_activity_events"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
