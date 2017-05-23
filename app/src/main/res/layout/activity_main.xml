@@ -5,117 +5,13 @@
     android:id="@+id/content_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context="com.erickogi14gmail.study20.Main.MainActivity"
-    >
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/app_bar"
+    tools:context="com.erickogi14gmail.study20.Main.MainActivity">
+    <include
+        layout="@layout/app_bar_main"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/app_bar_height"
-        android:fitsSystemWindows="true"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/toolbar_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
-            app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:paddingBottom="6dp"
-                android:paddingTop="6dp"
-                android:orientation="vertical"
-                android:layout_height="wrap_content">
+        android:layout_height="match_parent" />
 
 
-
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-
-                    <RelativeLayout
-                        android:layout_width="60dp"
-                        android:layout_marginTop="20dp"
-                        android:id="@+id/profile_image"
-                        android:background="@drawable/roundwhitebg"
-                        android:layout_gravity="center_vertical|center_horizontal"
-                        android:layout_height="60dp">
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:text="HW"
-                            android:textAlignment="center"
-                            android:gravity="center"
-                            android:layout_centerVertical="true"
-                            android:textSize="22sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/blacktext"
-                            android:layout_height="match_parent" />
-
-                    </RelativeLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:paddingTop="6dp"
-                        android:paddingBottom="6dp"
-                        android:paddingRight="16dp"
-                        android:paddingLeft="26dp"
-                        android:orientation="vertical"
-                        android:layout_toRightOf="@+id/profile_image"
-                        android:layout_height="wrap_content">
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:text="Harun Wangereka"
-                            android:textColor="@color/white"
-                            android:textSize="18sp"
-                            android:layout_height="wrap_content" />
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:text="harunwangereka@gmail.com"
-                            android:textSize="16sp"
-                            android:paddingTop="20dp"
-                            android:layout_height="wrap_content" />
-
-                        <Button
-                            android:layout_width="70dp"
-                            android:layout_marginTop="20dp"
-                            android:background="@drawable/roundwhitebg"
-                            android:text="Edit"
-                            android:textColor="@color/blacktext"
-                            android:textAllCaps="false"
-                            android:layout_height="30dp" />
-
-
-                    </LinearLayout>
-                </RelativeLayout>
-
-
-
-
-            </LinearLayout>
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
-        </android.support.design.widget.CollapsingToolbarLayout>
-
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tabs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabGravity="fill"
-            app:tabMode="fixed" />
-
-    </android.support.design.widget.AppBarLayout>
-    <include layout="@layout/content_main"/>
 
 
 </android.support.design.widget.CoordinatorLayout>

@@ -1,27 +1,413 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.erickogi14gmail.study20.Main.MainActivity"
-    tools:showIn="@layout/activity_main">
-
-
-
-
-
-
-
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/homeviewpager"
+    tools:showIn="@layout/app_bar_main">
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
 
 
-</android.support.v4.widget.NestedScrollView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:id="@+id/profile_card"
+        app:cardCornerRadius="3dp"
+        android:paddingRight="6dp"
+        android:paddingLeft="6dp"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="6dp"
+            android:paddingTop="6dp"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="60dp"
+                    android:id="@+id/profile_image"
+                    android:src="@drawable/user"
+                    android:layout_height="60dp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:paddingRight="16dp"
+                    android:paddingLeft="26dp"
+                    android:orientation="vertical"
+                    android:layout_toRightOf="@+id/profile_image"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:text="Harun Wangereka"
+                        android:textColor="@color/blacktext"
+                        android:textSize="18sp"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:text="harunwangereka@gmail.com"
+                        android:textSize="16sp"
+                        android:paddingTop="20dp"
+                        android:layout_height="wrap_content" />
+                    <Button
+                        android:layout_width="70dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/roundbluebg"
+                        android:text="Edit"
+                        android:textColor="@color/white"
+                        android:textAllCaps="false"
+                        android:layout_height="30dp" />
+                </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
+
+
+        </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_weight="2"
+                    android:layout_marginTop="8dp"
+                    app:cardCornerRadius="3dp"
+                    android:padding="5dp"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content">
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+
+                        <ImageView
+                            android:layout_width="60dp"
+                            android:id="@+id/newscard_image"
+                            android:background="@drawable/ic_insert_drive_file_black_24dp"
+                            android:backgroundTint="@color/line"
+                            android:layout_height="60dp"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_toRightOf="@id/newscard_image"
+                            android:orientation="vertical"
+                            android:layout_height="wrap_content">
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:text="My Notes"
+                                android:textColor="@color/blacktext"
+                                android:layout_gravity="center_horizontal|center_vertical"
+                                android:layout_height="wrap_content" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:paddingTop="6dp"
+                                android:text="All your classroom notes in one place"
+                                android:layout_height="wrap_content" />
+
+                            <view
+                                android:layout_width="match_parent"
+                                android:layout_marginTop="16dp"
+                                android:layout_height="1dp"
+                                android:background="@color/line"/>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:orientation="horizontal"
+                                android:paddingTop="6dp"
+                                android:paddingBottom="6dp"
+                                android:weightSum="4"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:text="20 Courses"
+                                    android:layout_weight="2"
+                                    android:layout_height="wrap_content" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:text="40% Downloaded"
+                                    android:layout_weight="2"
+                                    android:layout_height="wrap_content" />
+
+                            </LinearLayout>
+
+                        </LinearLayout></RelativeLayout>
+
+
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_weight="2"
+            android:layout_marginTop="8dp"
+            app:cardCornerRadius="3dp"
+            android:padding="5dp"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <ImageView
+                        android:layout_width="60dp"
+                        android:id="@+id/assignmentcard_image"
+                        android:background="@drawable/ic_note_add_black_24dp"
+                        android:backgroundTint="@color/line"
+                        android:layout_height="60dp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_toRightOf="@id/assignmentcard_image"
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content">
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:text="My Assignments"
+                            android:textColor="@color/blacktext"
+                            android:layout_gravity="center_horizontal|center_vertical"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:paddingTop="6dp"
+                            android:text="Find assignments from your classmates"
+                            android:layout_height="wrap_content" />
+
+                        <view
+                            android:layout_width="match_parent"
+                            android:layout_marginTop="16dp"
+                            android:layout_height="1dp"
+                            android:background="@color/line"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:orientation="horizontal"
+                            android:paddingTop="6dp"
+                            android:paddingBottom="6dp"
+                            android:weightSum="4"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:text="16 Assignments"
+                                android:layout_weight="2"
+                                android:layout_height="wrap_content" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:text="50% Downloaded"
+                                android:layout_weight="2"
+                                android:layout_height="wrap_content" />
+
+                        </LinearLayout>
+
+                    </LinearLayout></RelativeLayout>
+
+
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_weight="2"
+            android:layout_marginTop="8dp"
+            app:cardCornerRadius="3dp"
+            android:padding="5dp"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <ImageView
+                        android:layout_width="60dp"
+                        android:id="@+id/allnewscard_image"
+                        android:background="@drawable/ic_dehaze_black_24dp"
+                        android:backgroundTint="@color/line"
+                        android:layout_height="60dp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_toRightOf="@id/allnewscard_image"
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content">
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:text="International News"
+                            android:textColor="@color/blacktext"
+                            android:layout_gravity="center_horizontal|center_vertical"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:paddingTop="6dp"
+                            android:text="Find the latest news wrap up"
+                            android:layout_height="wrap_content" />
+
+                        <view
+                            android:layout_width="match_parent"
+                            android:layout_marginTop="16dp"
+                            android:layout_height="1dp"
+                            android:background="@color/line"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:orientation="horizontal"
+                            android:paddingTop="6dp"
+                            android:paddingBottom="6dp"
+                            android:weightSum="4"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:text="4 Trending"
+                                android:layout_weight="2"
+                                android:layout_height="wrap_content" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:text="None read"
+                                android:layout_weight="2"
+                                android:layout_height="wrap_content" />
+
+                        </LinearLayout>
+
+                    </LinearLayout></RelativeLayout>
+
+
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_weight="2"
+            android:layout_marginTop="8dp"
+            app:cardCornerRadius="3dp"
+            android:padding="5dp"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <ImageView
+                        android:layout_width="60dp"
+                        android:id="@+id/eventscard_image"
+                        android:background="@drawable/ic_event_note_black_24dp"
+                        android:backgroundTint="@color/line"
+                        android:layout_height="60dp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_toRightOf="@id/eventscard_image"
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content">
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:text="Campus Events"
+                            android:textColor="@color/blacktext"
+                            android:layout_gravity="center_horizontal|center_vertical"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:paddingTop="6dp"
+                            android:text="Discover the latest events around campus"
+                            android:layout_height="wrap_content" />
+
+                        <view
+                            android:layout_width="match_parent"
+                            android:layout_marginTop="16dp"
+                            android:layout_height="1dp"
+                            android:background="@color/line"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:orientation="horizontal"
+                            android:paddingTop="6dp"
+                            android:paddingBottom="6dp"
+                            android:weightSum="4"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:text="6 New Events"
+                                android:layout_weight="2"
+                                android:layout_height="wrap_content" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:text="2 Attending"
+                                android:layout_weight="2"
+                                android:layout_height="wrap_content" />
+
+                        </LinearLayout>
+
+                    </LinearLayout></RelativeLayout>
+
+
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+
+
+
+
+
+
+
+
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

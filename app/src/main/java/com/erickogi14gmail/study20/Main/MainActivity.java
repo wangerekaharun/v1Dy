@@ -35,8 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-        private TabLayout tabLayout;
-        private ViewPager viewPager;
+
 
         /*public static String[] gridViewStrings = {
 
@@ -86,13 +85,6 @@ public class MainActivity extends AppCompatActivity {
                 super.onCreate(savedInstanceState);
                 setContentView(R.layout.activity_main);
 
-                viewPager = (ViewPager) findViewById(R.id.homeviewpager);
-                setupViewPager(viewPager);
-
-                tabLayout = (TabLayout) findViewById(R.id.tabs);
-                tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-                tabLayout.setupWithViewPager(viewPager);
-                setupTabIcons();
 
                 SharedPreferences sharedPreferences = getSharedPreferences(api.SHARED_PREF_NAME, Context.MODE_PRIVATE);
                 loggedIn = sharedPreferences.getBoolean(api.LOGGEDIN_SHARED_PREF, false);
@@ -148,49 +140,6 @@ public class MainActivity extends AppCompatActivity {
             }
 
 
-
-        private void setupViewPager(ViewPager viewPager) {
-            ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-            adapter.addFragment(new fragment_saved_assignments(), "lo");
-
-            viewPager.setOffscreenPageLimit(1);
-            viewPager.setAdapter(adapter);
-        }
-
-
-        private void setupTabIcons() {
-            tabLayout.getTabAt(0).setText("My Notes");
-
-        }
-
-    class ViewPagerAdapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragmentList = new ArrayList<>();
-        private final List<String> mFragmentTitleList = new ArrayList<>();
-
-        public ViewPagerAdapter(FragmentManager manager) {
-            super(manager);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragmentList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragmentList.size();
-        }
-
-        public void addFragment(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return null;
-        }
-    }
 
 
         @Override

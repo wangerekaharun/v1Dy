@@ -26,4 +26,5 @@
     <color name="white">#FFF</color>
     <color name="blacktext">#000</color>
     <color name="transparent">#00000000</color>
+    <color name="line">#b7b4b4</color>
 </resources>
