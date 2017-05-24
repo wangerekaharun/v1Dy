@@ -31,8 +31,8 @@ import java.util.Map;
 
 public class Login extends AppCompatActivity {
     EditText emailText, passwordText;
-    TextView signUpText;
-    AppCompatButton loginButton;
+    TextView signUpText,login_text;
+
     private boolean loggedIn = false;
 
     @Override
@@ -46,10 +46,11 @@ public class Login extends AppCompatActivity {
         emailText = (EditText) findViewById(R.id.input_email);
         passwordText = (EditText) findViewById(R.id.input_password);
         signUpText = (TextView) findViewById(R.id.link_signup);
+        login_text=(TextView)findViewById(R.id.link_login);
 
-        loginButton = (AppCompatButton) findViewById(R.id.btn_login);
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
+
+        login_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!validate()) {
@@ -57,7 +58,7 @@ public class Login extends AppCompatActivity {
                     return;
                 }
 
-                loginButton.setEnabled(false);
+                login_text.setEnabled(false);
 
                 final ProgressDialog progressDialog = new ProgressDialog(Login.this,
                         R.style.AppTheme);
@@ -101,7 +102,7 @@ public class Login extends AppCompatActivity {
     }
 
     public void onLoginSuccess() {
-        loginButton.setEnabled(true);
+        login_text.setEnabled(true);
         finish();
     }
 
@@ -116,7 +117,7 @@ public class Login extends AppCompatActivity {
         st.show();
 
 
-        loginButton.setEnabled(true);
+        login_text.setEnabled(true);
     }
 
     public boolean validate() {

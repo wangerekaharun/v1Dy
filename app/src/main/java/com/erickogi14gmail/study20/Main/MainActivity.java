@@ -34,6 +34,8 @@ import com.erickogi14gmail.study20.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.erickogi14gmail.study20.R.layout.activity_main;
+
 public class MainActivity extends AppCompatActivity {
 
 
@@ -77,16 +79,19 @@ public class MainActivity extends AppCompatActivity {
 
 
             };*/
-            boolean loggedIn;
+           // boolean loggedIn;
             //GridView gridView;
 
             @Override
             protected void onCreate(Bundle savedInstanceState) {
                 super.onCreate(savedInstanceState);
                 setContentView(R.layout.activity_main);
+                Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+                setSupportActionBar(toolbar);
 
 
-                SharedPreferences sharedPreferences = getSharedPreferences(api.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+
+                /*SharedPreferences sharedPreferences = getSharedPreferences(api.SHARED_PREF_NAME, Context.MODE_PRIVATE);
                 loggedIn = sharedPreferences.getBoolean(api.LOGGEDIN_SHARED_PREF, false);
                 loggedIn = true;
                 Log.d("loginStatus",String.valueOf(loggedIn));
@@ -137,12 +142,12 @@ public class MainActivity extends AppCompatActivity {
 
 
                 }
-            }
 
 
 
 
-        @Override
+
+        /*@Override
             public void onBackPressed() {
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -150,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     super.onBackPressed();
                 }
-            }
+            }*/
 
             @Override
             public boolean onCreateOptionsMenu(Menu menu) {
@@ -174,6 +179,19 @@ public class MainActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
             }
 
+    public void openMyNotes(View view) {
+    }
+
+    public void openAssignments(View view) {
+    }
+
+    public void openNews(View view) {
+    }
+
+    public void openEvents(View view) {
+    }
+}
+
 
             /*@SuppressWarnings("StatementWithEmptyBody")
             @Override
@@ -190,4 +208,4 @@ public class MainActivity extends AppCompatActivity {
                 drawer.closeDrawer(GravityCompat.START);
                 return true;
             }*/
-        }
+

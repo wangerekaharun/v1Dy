@@ -38,8 +38,7 @@ public class Register  extends AppCompatActivity {
     EditText nameText;
     EditText emailText;
     EditText passwordText;
-    Button signupButton;
-    TextView loginLink;
+    TextView loginLink,signup_text;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,12 +49,13 @@ public class Register  extends AppCompatActivity {
         nameText = (EditText) findViewById(R.id.input_name);
         emailText = (EditText) findViewById(R.id.input_email);
         passwordText = (EditText) findViewById(R.id.input_password);
+        signup_text=(TextView)findViewById(R.id.text_signup);
 
-        signupButton = (Button) findViewById(R.id.btn_signup);
+
         loginLink = (TextView) findViewById(R.id.link_login);
 
 
-        signupButton.setOnClickListener(new View.OnClickListener() {
+        signup_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signup();
@@ -81,7 +81,7 @@ public class Register  extends AppCompatActivity {
             return;
         }
 
-        signupButton.setEnabled(false);
+        signup_text.setEnabled(false);
 
         final ProgressDialog progressDialog = new ProgressDialog(Register.this,
                 R.style.AppTheme);
@@ -99,7 +99,7 @@ public class Register  extends AppCompatActivity {
 
     }
     public void onSignupSuccess() {
-        signupButton.setEnabled(true);
+        signup_text.setEnabled(true);
         setResult(RESULT_OK, null);
         finish();
     }
@@ -107,7 +107,7 @@ public class Register  extends AppCompatActivity {
     public void onSignupFailed() {
         Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
 
-        signupButton.setEnabled(true);
+        signup_text.setEnabled(true);
     }
 
     public boolean validate() {

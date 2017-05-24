@@ -47,16 +47,16 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Main.login.Register"
-            android:label="Sign Up"
+            android:label="Create your account"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Main.News_Api_news.News"
             android:label="@string/title_activity_news"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
+        <!--<activity
             android:name=".Main.News_Api_news.utils.Categories"
             android:label="@string/title_activity_categories"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" />-->
         <activity
             android:name=".Main.News_Api_news.utils.ReadArticle"
             android:label="@string/title_activity_read_article"

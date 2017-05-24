@@ -27,4 +27,9 @@
     <color name="blacktext">#000</color>
     <color name="transparent">#00000000</color>
     <color name="line">#b7b4b4</color>
+    <color name="note_green">#f44cb746</color>
+    <color name="assignment_orange">#ec8d3a</color>
+    <color name="events_red">#fa4646</color>
+    <color name="news_purple">#8f52de</color>
+    <color name="background">#e5e9ec</color>
 </resources>

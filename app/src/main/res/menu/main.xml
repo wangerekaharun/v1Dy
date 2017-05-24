@@ -5,6 +5,7 @@
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="@string/action_settings"
-        app:showAsAction="never" />
+        android:icon="@drawable/ic_notifications_black_24dp"
+        app:showAsAction="always" />
 
 </menu>

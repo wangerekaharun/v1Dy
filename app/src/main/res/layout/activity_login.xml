@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:background="@color/background"
     tools:context="com.erickogi14gmail.study20.Main.login.Login">
 
     <android.support.design.widget.AppBarLayout

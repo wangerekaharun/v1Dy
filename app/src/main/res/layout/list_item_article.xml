@@ -25,6 +25,7 @@
             android:layout_marginBottom="2dp"
             android:fontFamily="sans-serif"
             android:gravity="left"
+            android:text="Test"
             android:paddingLeft="10dp"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@android:color/black"
@@ -38,6 +39,7 @@
                 android:id="@+id/img_article"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:src="@drawable/newss"
                 android:scaleType="centerCrop"
                 android:transitionName="tImage" />
 
@@ -61,6 +63,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:text="02:05:2017"
                     android:layout_marginBottom="2dp"
                     android:gravity="left"
                     android:paddingLeft="10dp"
@@ -77,6 +80,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginBottom="2dp"
+            android:text="@string/desc"
             android:gravity="left"
             android:paddingLeft="10dp"
             android:textAppearance="?android:attr/textAppearanceMedium" />
