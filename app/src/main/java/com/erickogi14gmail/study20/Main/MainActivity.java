@@ -190,6 +190,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void openEvents(View view) {
     }
+
+    public void openRevision(View view) {
+    }
 }
 
 

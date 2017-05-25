@@ -31,5 +31,7 @@
     <color name="assignment_orange">#ec8d3a</color>
     <color name="events_red">#fa4646</color>
     <color name="news_purple">#8f52de</color>
+    <color name="revision">#3699e1</color>
+    <color name="timetable">#32ab5c</color>
     <color name="background">#e5e9ec</color>
 </resources>
