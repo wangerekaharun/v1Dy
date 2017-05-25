@@ -13,6 +13,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.erickogi14gmail.study20.R;
+
 public class Events extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
