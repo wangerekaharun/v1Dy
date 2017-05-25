@@ -116,5 +116,7 @@
     <string name="title_activity_news">News</string>
     <string name="title_activity_assignments">Assignments</string>
     <string name="title_activity_events">Events</string>
-    <string name="desc">Components with responsive elevations may encounter other components as they move between</string>
+    <string name="event_desc">Greetings From GDG Moi University. The Google I/O extended Eldoret 2017 is going to be lit
+    happening for the first time in Eldoret Region.Kindly RSVP on the meetup app or website to get a space in this event</string>
+    <string name="desc">Components with responsive elevations may encounter other components as they move betweena</string>
 </resources>
